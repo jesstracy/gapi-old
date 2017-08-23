@@ -8,11 +8,19 @@ import (
 // todo: include a int score
 // todo: include a status win/lose/tie
 
+type Result int
+const (
+	WIN Result = iota    //0
+	LOSS                 //1
+	TIE                  //2
+)
+
 type Outcome struct {
-	Id       int  `gorm:"primary_key;"`
-	GameId   int  `json:"gameid"`
-	PlayerId int  `json:"playerid"`
-	Win      bool `json:"win"`
+	Id       int        `gorm:"primary_key;"`
+	GameId   int        `json:"gameid"`
+	PlayerId int        `json:"playerid"`
+	Result   Result     `json:"result"`
+	Score	 int		`json:"score"`
 }
 
 func GetOutcomes() ([]Outcome, error) {
