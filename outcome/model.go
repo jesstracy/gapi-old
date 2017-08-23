@@ -2,6 +2,7 @@ package outcome
 
 import (
 	"github.com/gapi/db"
+	"time"
 )
 
 // todo: foreign keys
@@ -17,6 +18,7 @@ const (
 
 type Outcome struct {
 	Id       int        `gorm:"primary_key;"`
+	Date 	 time.Time  `json:"date"`
 	GameId   int        `json:"gameid"`
 	PlayerId int        `json:"playerid"`
 	Result   Result     `json:"result"`
