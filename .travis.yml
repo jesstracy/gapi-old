@@ -2,6 +2,10 @@ language: go
 go:
   - 1.8
 
+before_script:
+  - git config user.name "jesstracy"
+  - git config user.email "j.tracy916@gmail.com"
+
 script:
   - go test -v ./...
 
