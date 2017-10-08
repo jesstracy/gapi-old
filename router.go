@@ -1,11 +1,12 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/gapi/game"
 	"github.com/gapi/outcome"
 	"github.com/gapi/player"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func Routes(router *gin.Engine) {
@@ -20,8 +21,8 @@ func Routes(router *gin.Engine) {
 	gameRouter := router.Group("/games")
 	{
 		gameRouter.POST("/", game.CreateGame)
-		gameRouter.GET("/", game.GameIndex)
-		gameRouter.GET("/:Id", game.ShowGame)
+		gameRouter.GET("/", game.RetrieveAllGames)
+		gameRouter.GET("/:Id", game.RetrieveSingleGame)
 		gameRouter.DELETE("/:Id", game.DeleteGame)
 	}
 	outcomeRouter := router.Group("/outcomes")
@@ -31,5 +32,23 @@ func Routes(router *gin.Engine) {
 		outcomeRouter.GET("/:Id", outcome.ShowOutcome)
 		outcomeRouter.DELETE("/:Id", outcome.DeleteOutcome)
 	}
+	router.Use(GameDataContextMW())
+	router.Use(PlayerDataContextMW())
 
+}
+
+func GameDataContextMW() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		gameDl := &game.GameDLGorm{}
+		c.Set("Db", gameDl)
+		c.Next()
+	}
+}
+
+func PlayerDataContextMW() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		playerDl := &player.PlayerDLGorm{}
+		c.Set("Db", playerDl)
+		c.Next()
+	}
 }
