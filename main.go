@@ -29,3 +29,7 @@ func main() {
 
 	router.Run(":8080")
 }
+
+func Add(a, b int) int {
+	return a + b
+}
