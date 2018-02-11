@@ -6,7 +6,7 @@ import (
 	"github.com/jesstracy/gapi/game"
 	"github.com/jesstracy/gapi/outcome"
 	"github.com/jesstracy/gapi/player"
-	"github.com/jesstracy/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
 )
 
 func Routes(router *gin.Engine) {
