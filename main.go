@@ -6,10 +6,10 @@ package main
 import (
 	"fmt"
 
-	"github.com/gapi/db"
-	"github.com/gapi/game"
-	"github.com/gapi/outcome"
-	"github.com/gapi/player"
+	"github.com/jesstracy/gapi/db"
+	"github.com/jesstracy/gapi/game"
+	"github.com/jesstracy/gapi/outcome"
+	"github.com/jesstracy/gapi/player"
 	"github.com/gin-gonic/gin"
 )
 

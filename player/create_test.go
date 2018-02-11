@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"net/url"
 
-	. "github.com/gapi/player"
+	. "github.com/jesstracy/gapi/player"
 	"github.com/gin-gonic/gin"
 
 	. "github.com/onsi/ginkgo"

@@ -1,7 +1,7 @@
 package outcome
 
 import (
-	"github.com/gapi/db"
+	"github.com/jesstracy/gapi/db"
 )
 
 // todo: foreign keys

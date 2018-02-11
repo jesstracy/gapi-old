@@ -1,7 +1,7 @@
 package game
 
 import (
-	"github.com/gapi/db"
+	"github.com/jesstracy/gapi/db"
 )
 
 // note id is provided by default, its the primary key

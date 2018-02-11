@@ -1,6 +1,6 @@
 package player
 
-import "github.com/gapi/db"
+import "github.com/jesstracy/gapi/db"
 
 type Player struct {
 	Id   int    `gorm:"primary_key;"`

@@ -3,10 +3,10 @@ package main
 import (
 	"net/http"
 
-	"github.com/gapi/game"
-	"github.com/gapi/outcome"
-	"github.com/gapi/player"
-	"github.com/gin-gonic/gin"
+	"github.com/jesstracy/gapi/game"
+	"github.com/jesstracy/gapi/outcome"
+	"github.com/jesstracy/gapi/player"
+	"github.com/jesstracy/gin-gonic/gin"
 )
 
 func Routes(router *gin.Engine) {
