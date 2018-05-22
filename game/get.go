@@ -1,14 +1,14 @@
 package game
 
 import (
+	//"fmt"
+	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
-
-	"github.com/gin-gonic/gin"
 )
 
 func RetrieveAllGames(c *gin.Context) {
-	dataContext := c.MustGet("Db").(GameDLInterface)
+	dataContext := c.MustGet("Db").(GameDLInterface) // Db is set in router.go
 	games, err := dataContext.RetrieveAllGames()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError})
