@@ -9,7 +9,7 @@ import (
 func CreateGame(c *gin.Context) {
 	dataContext := c.MustGet("Db").(GameDLInterface)
 	gameName := c.Param("Name")
-	if gameName != "" {
+	if gameName == "" {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"status": "unprocessable"})
 	}
 	if game, err := dataContext.CreateGame(gameName); err != nil {

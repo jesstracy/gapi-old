@@ -7,8 +7,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func OutcomeIndex(c *gin.Context) {
-	outcomes, err := GetOutcomes()
+func RetrieveAllOutcomes(c *gin.Context) {
+	dataContext := c.MustGet("Db").(OutcomeDLInterface)
+	outcomes, err := dataContext.RetrieveAllOutcomes()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError})
 	} else {
@@ -16,22 +17,17 @@ func OutcomeIndex(c *gin.Context) {
 	}
 }
 
-func ShowOutcome(c *gin.Context) {
+func RetrieveSingleOutcome(c *gin.Context) {
+	dataContext := c.MustGet("Db").(OutcomeDLInterface)
 	outcomeId, err := strconv.Atoi(c.Param("Id"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"status": "internalservererror"})
 	} else {
-		o := Outcome{Id: outcomeId}
-		o, err = o.GetOutcome()
+		o, err := dataContext.RetrieveSingleOutcome(outcomeId)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"status": "internalservererror"})
+			c.JSON(http.StatusNotFound, gin.H{"status": "notfound"})
 		} else {
-			c.JSON(http.StatusOK, gin.H{"Id": o.Id,
-				"GameId":   o.GameId,
-				"PlayerId": o.PlayerId,
-				"Result":   o.Result,
-				"Score":	o.Score,
-				"Date":		o.Date})
+			c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": o})
 		}
 	}
 }

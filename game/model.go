@@ -1,7 +1,6 @@
 package game
 
 import (
-	"fmt"
 	"github.com/jesstracy/gapi/db"
 )
 
@@ -34,18 +33,12 @@ func (g *GameDLGorm) RetrieveSingleGame(gameId int) (Game, error) {
 }
 
 func (g *GameDLGorm) RetrieveAllGames() ([]Game, error) {
-	fmt.Println("geting here")
 	data, err := db.NewDB()
 	if err != nil {
 		return nil, err
 	}
 	games := []Game{}
-	// https://github.com/jinzhu/gorm/blob/master/main.go#L309
-	retDB := data.Find(&games) //finding zero.
-	fmt.Printf("%+v\n", retDB)
-	fmt.Println("Num games:", len(games))
-	fmt.Println("Value:", retDB.Value)
-	// IDK ¯\_(ツ)_/¯ start with create next time??
+	data.Find(&games)
 	return games, nil
 }
 

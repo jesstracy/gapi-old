@@ -23,8 +23,7 @@ func RetrieveSingleGame(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"status": "internalservererror"})
 	} else {
-		game := Game{Id: gameId}
-		g, err := dataContext.RetrieveSingleGame(game.Id)
+		g, err := dataContext.RetrieveSingleGame(gameId)
 		if err != nil {
 			c.JSON(http.StatusNotFound, gin.H{"status": "notfound"})
 		} else {
