@@ -1,24 +1,26 @@
 package main
 
 import (
-	"net/http"
-
+	//"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/jesstracy/gapi/game"
 	"github.com/jesstracy/gapi/outcome"
 	"github.com/jesstracy/gapi/player"
-	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func Routes(router *gin.Engine) {
 	router.StaticFS("/frontend", http.Dir("./frontend"))
 	playerRouter := router.Group("/players")
+	playerRouter.Use(PlayerDataContextMW())
 	{
 		playerRouter.POST("/", player.CreatePlayer)
-		playerRouter.GET("/", player.PlayerIndex)
-		playerRouter.GET("/:Id", player.ShowPlayer)
+		playerRouter.GET("/", player.RetrieveAllPlayers)
+		playerRouter.GET("/:Id", player.RetrieveSinglePlayer)
 		playerRouter.DELETE("/:Id", player.DeletePlayer)
 	}
 	gameRouter := router.Group("/games")
+	gameRouter.Use(GameDataContextMW())
 	{
 		gameRouter.POST("/", game.CreateGame)
 		gameRouter.GET("/", game.RetrieveAllGames)
@@ -26,15 +28,15 @@ func Routes(router *gin.Engine) {
 		gameRouter.DELETE("/:Id", game.DeleteGame)
 	}
 	outcomeRouter := router.Group("/outcomes")
+	outcomeRouter.Use(OutcomeDataContextMW())
 	{
 		outcomeRouter.POST("/", outcome.CreateOutcome)
-		outcomeRouter.GET("/", outcome.OutcomeIndex)
-		outcomeRouter.GET("/:Id", outcome.ShowOutcome)
+		outcomeRouter.GET("/", outcome.RetrieveAllOutcomes)
+		outcomeRouter.GET("/:Id", outcome.RetrieveSingleOutcome)
 		outcomeRouter.DELETE("/:Id", outcome.DeleteOutcome)
 	}
-	router.Use(GameDataContextMW())
-	router.Use(PlayerDataContextMW())
-
+	//router.Use(GameDataContextMW())
+	//router.Use(PlayerDataContextMW())
 }
 
 func GameDataContextMW() gin.HandlerFunc {
@@ -49,6 +51,14 @@ func PlayerDataContextMW() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		playerDl := &player.PlayerDLGorm{}
 		c.Set("Db", playerDl)
+		c.Next()
+	}
+}
+
+func OutcomeDataContextMW() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		outcomeDl := &outcome.OutcomeDLGorm{}
+		c.Set("Db", outcomeDl)
 		c.Next()
 	}
 }
